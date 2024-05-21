@@ -2,7 +2,6 @@ package com.loc.currencyconvertor
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Animatable
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -23,7 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -59,10 +57,8 @@ fun CurrencyConvertorRoute(
     } else {
         CurrencyConvertorScreen(
             uiState = uiState,
-            onFromCurrencyCodeChange = viewModel::onFromCurrencyCodeChange,
-            onFromCurrencyValueChange = viewModel::onFromCurrencyValueChange,
-            onToCurrencyCodeChange = viewModel::onToCurrencyCodeChange,
-            onToCurrencyValueChange = viewModel::onToCurrencyValueChange,
+            onFromCurrencyChange = viewModel::onFromCurrencyChange,
+            onToCurrencyChange = viewModel::onToCurrencyChange,
             swapCurrencies = viewModel::swapCurrencies
         )
     }
@@ -71,10 +67,8 @@ fun CurrencyConvertorRoute(
 @Composable
 internal fun CurrencyConvertorScreen(
     uiState: CurrencyConvertorUiState,
-    onFromCurrencyCodeChange: (String) -> Unit,
-    onFromCurrencyValueChange: (String) -> Unit,
-    onToCurrencyCodeChange: (String) -> Unit,
-    onToCurrencyValueChange: (String) -> Unit,
+    onFromCurrencyChange: (CurrencyUiModel) -> Unit,
+    onToCurrencyChange: (CurrencyUiModel) -> Unit,
     swapCurrencies: () -> Unit
 ) {
     Column(modifier = Modifier.fillMaxSize()) {
@@ -90,12 +84,10 @@ internal fun CurrencyConvertorScreen(
 
         CurrencyConvertorCard(
             allCurrencies = uiState.allCurrencies,
-            fromCurrency = uiState.fromCurrencyInfo,
-            toCurrencyInfo = uiState.toCurrencyInfo,
-            onFromCurrencyCodeChange = onFromCurrencyCodeChange,
-            onFromCurrencyValueChange = onFromCurrencyValueChange,
-            onToCurrencyCodeChange = onToCurrencyCodeChange,
-            onToCurrencyValueChange = onToCurrencyValueChange,
+            fromCurrency = uiState.fromCurrency,
+            toCurrencyInfo = uiState.toCurrency,
+            onFromCurrencyChange = onFromCurrencyChange,
+            onToCurrencyChange = onToCurrencyChange,
             swapCurrencies = swapCurrencies
         )
 
@@ -124,13 +116,11 @@ internal fun CurrencyConvertorScreen(
 @Composable
 private fun CurrencyConvertorCard(
     modifier: Modifier = Modifier,
-    allCurrencies: List<String>,
+    allCurrencies: List<CurrencyUiModel>,
     fromCurrency: CurrencyUiModel,
     toCurrencyInfo: CurrencyUiModel,
-    onFromCurrencyCodeChange: (String) -> Unit,
-    onFromCurrencyValueChange: (String) -> Unit,
-    onToCurrencyCodeChange: (String) -> Unit,
-    onToCurrencyValueChange: (String) -> Unit,
+    onFromCurrencyChange: (CurrencyUiModel) -> Unit,
+    onToCurrencyChange: (CurrencyUiModel) -> Unit,
     swapCurrencies: () -> Unit
 ) {
     MCCard(
@@ -142,8 +132,7 @@ private fun CurrencyConvertorCard(
             label = stringResource(id = R.string.amount),
             selectedCurrency = fromCurrency,
             currencies = allCurrencies,
-            onCurrencyCodeChange = onFromCurrencyCodeChange,
-            onCurrencyValueChange = onFromCurrencyValueChange
+            onCurrencyChange = onFromCurrencyChange
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -158,8 +147,7 @@ private fun CurrencyConvertorCard(
             label = stringResource(id = R.string.indicative_exhage_rate),
             selectedCurrency = toCurrencyInfo,
             currencies = allCurrencies,
-            onCurrencyCodeChange = onToCurrencyCodeChange,
-            onCurrencyValueChange = onToCurrencyValueChange
+            onCurrencyChange = onToCurrencyChange
         )
     }
 }
@@ -169,10 +157,12 @@ private fun CurrencyInfoRow(
     modifier: Modifier = Modifier,
     label: String,
     selectedCurrency: CurrencyUiModel,
-    currencies: List<String>,
-    onCurrencyCodeChange: (String) -> Unit,
-    onCurrencyValueChange: (String) -> Unit,
+    currencies: List<CurrencyUiModel>,
+    onCurrencyChange: (CurrencyUiModel) -> Unit,
 ) {
+    val currencyCodes = remember(currencies) {
+        currencies.map { it.code }
+    }
     Column(modifier = modifier) {
         Text(
             text = label,
@@ -192,8 +182,8 @@ private fun CurrencyInfoRow(
             ) {
                 MCTextMenu(
                     selectedOption = it,
-                    options = currencies,
-                    onOptionSelected = { i -> onCurrencyCodeChange(currencies[i]) }
+                    options = currencyCodes,
+                    onOptionSelected = { i -> onCurrencyChange(currencies[i]) }
                 )
             }
 
@@ -201,7 +191,7 @@ private fun CurrencyInfoRow(
 
             MCTextField(
                 value = selectedCurrency.value,
-                onValueChange = onCurrencyValueChange,
+                onValueChange = { onCurrencyChange(selectedCurrency.copy(value = it)) },
                 modifier = Modifier.weight(1f),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Number
