@@ -26,7 +26,7 @@ fun MCCard(
     Card(
         modifier = modifier.padding(4.dp),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 4.dp
+            defaultElevation = 6.dp
         ),
         shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors().copy(
@@ -39,7 +39,7 @@ fun MCCard(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun MyCardPreview() {
     MoneyConvertorTheme {

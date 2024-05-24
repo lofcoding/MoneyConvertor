@@ -34,6 +34,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        isCoreLibraryDesugaringEnabled = true
     }
     kotlinOptions {
         jvmTarget = "17"
@@ -69,10 +70,14 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-
+    implementation(libs.androidx.work)
+    implementation(libs.hilt.ext.work)
+    coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
     implementation(project(":core:network"))
     implementation(project(":core:model"))
+    implementation(project(":core:data"))
+    implementation(project(":core:common"))
     implementation(project(":core:designssystem"))
     implementation(project(":core:database"))
     implementation(project(":feature:currency-convertor"))

@@ -52,16 +52,12 @@ fun CurrencyConvertorRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    if (uiState.isLoading) {
-        CircularProgressIndicator()
-    } else {
-        CurrencyConvertorScreen(
-            uiState = uiState,
-            onFromCurrencyChange = viewModel::onFromCurrencyChange,
-            onToCurrencyChange = viewModel::onToCurrencyChange,
-            swapCurrencies = viewModel::swapCurrencies
-        )
-    }
+    CurrencyConvertorScreen(
+        uiState = uiState,
+        onFromCurrencyChange = viewModel::onFromCurrencyChange,
+        onToCurrencyChange = viewModel::onToCurrencyChange,
+        swapCurrencies = viewModel::swapCurrencies
+    )
 }
 
 @Composable
@@ -95,7 +91,7 @@ internal fun CurrencyConvertorScreen(
 
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
-            text = stringResource(id = R.string.indicative_exhage_rate),
+            text = "${stringResource(id = R.string.indicative_exhage_rate)} ${uiState.lastUpdated}",
             style = MaterialTheme.typography.labelSmall
         )
 
@@ -109,6 +105,16 @@ internal fun CurrencyConvertorScreen(
             )
         )
 
+        if(uiState.isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(30.dp)
+                )
+            }
+        }
     }
 }
 
@@ -144,7 +150,7 @@ private fun CurrencyConvertorCard(
         Spacer(modifier = Modifier.height(10.dp))
 
         CurrencyInfoRow(
-            label = stringResource(id = R.string.indicative_exhage_rate),
+            label = stringResource(id = R.string.converted_amount),
             selectedCurrency = toCurrencyInfo,
             currencies = allCurrencies,
             onCurrencyChange = onToCurrencyChange
@@ -183,7 +189,9 @@ private fun CurrencyInfoRow(
                 MCTextMenu(
                     selectedOption = it,
                     options = currencyCodes,
-                    onOptionSelected = { i -> onCurrencyChange(currencies[i]) }
+                    onOptionSelected = { i ->
+                        onCurrencyChange(currencies[i].copy(value = selectedCurrency.value))
+                    }
                 )
             }
 
@@ -250,47 +258,11 @@ private fun CurrenciesSwapper(
 @Composable
 private fun CurrencyConvertorScreenPreview() {
     MoneyConvertorTheme {
-//        CurrencyConvertorScreen(
-//            uiState = CurrencyConvertorUiState.PreviewData,
-//            onFromCurrencyChange = {},
-//            onToCurrencyChange = {},
-//            swapCurrencies = {}
-//        )
-    }
-}
-
-@Preview
-@Composable
-private fun CurrencyConvertorCardPreview() {
-    MoneyConvertorTheme {
-//        CurrencyConvertorCard(
-//            allCurrencies = CurrencyUiModel.allCurrencies,
-//            fromCurrency = CurrencyUiModel.allCurrencies.first(),
-//            toCurrencyInfo = CurrencyUiModel.allCurrencies.first(),
-//            onFromCurrencyInfoChange = { },
-//            onToCurrencyInfoChange = { },
-//            swapCurrencies = { }
-//        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun CurrencyInfoRowPreview() {
-    MoneyConvertorTheme {
-//        CurrencyInfoRow(
-//            label = stringResource(id = R.string.amount),
-//            selectedCurrency = CurrencyUiModel.allCurrencies.first(),
-//            currencies = CurrencyUiModel.allCurrencies,
-//            onCurrencyChange = {},
-//        )
-    }
-}
-
-@Preview
-@Composable
-private fun CurrenciesSwapper(modifier: Modifier = Modifier) {
-    MoneyConvertorTheme {
-        CurrenciesSwapper { }
+        CurrencyConvertorScreen(
+            uiState = CurrencyConvertorUiState.PreviewData,
+            onFromCurrencyChange = {},
+            onToCurrencyChange = {},
+            swapCurrencies = {}
+        )
     }
 }
