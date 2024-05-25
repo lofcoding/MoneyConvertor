@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -48,7 +49,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CurrencyConvertorRoute(
-    viewModel: CurrencyViewModel = hiltViewModel()
+    viewModel: CurrencyConvertorViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -111,7 +112,9 @@ internal fun CurrencyConvertorScreen(
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(
-                    modifier = Modifier.size(30.dp)
+                    modifier = Modifier
+                        .size(30.dp)
+                        .testTag("loading")
                 )
             }
         }
@@ -238,7 +241,7 @@ private fun CurrenciesSwapper(
                         onSwap()
                         animatable.animateTo(animatable.value + 180f)
                     }
-                },
+                }.testTag("swap"),
             contentAlignment = Alignment.Center
         ) {
             Icon(

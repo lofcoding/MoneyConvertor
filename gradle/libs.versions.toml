@@ -19,6 +19,7 @@ androidxHiltNavigationCompose = "1.2.0"
 androidxLifecycle = "2.7.0"
 room = "2.6.1"
 workVersion = "2.9.0"
+kotlinxCoroutines = "1.8.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -37,7 +38,7 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7"}
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidxHiltNavigationCompose" }
 androidx-lifecycle-runtimeCompose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewModelCompose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
@@ -63,6 +64,12 @@ android-tools-common = { group = "com.android.tools", name = "common", version.r
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 
+# Testing
+androidx-lifecycle-runtimeTesting = { group = "androidx.lifecycle", name = "lifecycle-runtime-testing", version.ref = "androidxLifecycle" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+mockito = { group = "org.mockito.kotlin", name = "mockito-kotlin", version = "5.3.1" }
+androidx-core-testing = { group = "androidx.arch.core", name = "core-testing", version = "2.2.0" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -71,10 +78,10 @@ ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 room = { id = "androidx.room", version.ref = "room" }
-moneyconvertor-android-Library = { id = "moneyConvertor.android.library", version = "unspecified"}
-moneyconvertor-android-compose = { id = "moneyConvertor.android.compose", version = "unspecified"}
-moneyconvertor-android-feature = { id = "moneyConvertor.android.feature", version = "unspecified"}
-moneyconvertor-android-hilt = { id = "moneyConvertor.android.hilt", version = "unspecified"}
-moneyconvertor-android-room = { id = "moneyConvertor.android.room", version = "unspecified"}
+moneyconvertor-android-Library = { id = "moneyConvertor.android.library", version = "unspecified" }
+moneyconvertor-android-compose = { id = "moneyConvertor.android.compose", version = "unspecified" }
+moneyconvertor-android-feature = { id = "moneyConvertor.android.feature", version = "unspecified" }
+moneyconvertor-android-hilt = { id = "moneyConvertor.android.hilt", version = "unspecified" }
+moneyconvertor-android-room = { id = "moneyConvertor.android.room", version = "unspecified" }
 
 

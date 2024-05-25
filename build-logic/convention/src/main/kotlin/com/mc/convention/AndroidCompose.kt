@@ -44,6 +44,7 @@ internal fun Project.configureAndroidCompose(
             add("implementation", libs.findLibrary("androidx-material3").get())
             add("implementation", libs.findLibrary("androidx-lifecycle-runtimeCompose").get())
             add("debugImplementation", libs.findLibrary("androidx-compose-ui-tooling").get())
+            add("androidTestImplementation", platform(bom))
         }
 
         testOptions {

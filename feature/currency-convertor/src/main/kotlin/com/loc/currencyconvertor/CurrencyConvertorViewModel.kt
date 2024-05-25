@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mc.data.repository.CurrencyRepo
+import com.mc.data.worker.SyncManager
 import com.mc.data.worker.WorkManagerSyncManager
 import com.mc.model.currency_convertor.CurrencyInfo
 import com.mc.model.currency_convertor.CurrencyUiModel
@@ -21,10 +22,10 @@ import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
-class CurrencyViewModel @Inject constructor(
+class CurrencyConvertorViewModel @Inject constructor(
     private val currencyRepository: CurrencyRepo,
     private val sharedPreferences: SharedPreferences,
-    workManagerSyncManager: WorkManagerSyncManager
+    workManagerSyncManager: SyncManager
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CurrencyConvertorUiState())
@@ -33,8 +34,8 @@ class CurrencyViewModel @Inject constructor(
     private lateinit var exchangeRates: ExchangeRates
 
     companion object {
-        private const val fromCurrencyKey = "fromCurrency"
-        private const val toCrrencyKey = "toCurrency"
+        const val fromCurrencyKey = "fromCurrency"
+        const val toCrrencyKey = "toCurrency"
     }
 
     init {
