@@ -7,8 +7,8 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply {
-                apply("moneyConvertor-android-library")
-                apply("moneyConvertor-android.hilt")
+                apply("moneyConvertor.android.library")
+                apply("moneyConvertor.android.hilt")
             }
 
             dependencies {

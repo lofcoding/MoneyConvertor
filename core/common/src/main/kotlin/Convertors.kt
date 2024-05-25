@@ -1,3 +1,0 @@
-//fun String.safeToDouble(): Double {
-//
-//}

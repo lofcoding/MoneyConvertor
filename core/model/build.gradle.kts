@@ -1,5 +1,5 @@
 plugins {
-    id("moneyConvertor-jvm-library")
+    id("moneyConvertor.jvm.library")
     id("kotlinx-serialization")
 }
 

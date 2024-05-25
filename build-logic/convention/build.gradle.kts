@@ -33,22 +33,20 @@ dependencies {
     compileOnly(libs.room.gradlePlugin)
 }
 
-//TODO: Fix the ids
-
 gradlePlugin {
     plugins {
         register("androidLibrary") {
-            id = "moneyConvertor-android-library"
+            id = "moneyConvertor.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
 
         register("jvmLibrary") {
-            id = "moneyConvertor-jvm-library"
+            id = "moneyConvertor.jvm.library"
             implementationClass = "JvmLibraryConventionPlugin"
         }
 
         register("androidHilt") {
-            id = "moneyConvertor-android.hilt"
+            id = "moneyConvertor.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import com.example.moneyconvertor.navigation.MoneyConvertorNavGraph
 import com.loc.currencyconvertor.CurrencyConvertorRoute
 import com.mc.designsystem.theme.MoneyConvertorTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,7 +25,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    CurrencyConvertorRoute()
+                    MoneyConvertorNavGraph()
                 }
             }
         }

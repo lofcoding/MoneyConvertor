@@ -20,11 +20,6 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 import javax.inject.Inject
 
-/*
-TODO: - FIX BUG After selecting currency, the calculations don't work correctly.
-      - Gradle refactoring in app module, and in plugin names.
-*/
-
 @HiltViewModel
 class CurrencyViewModel @Inject constructor(
     private val currencyRepository: CurrencyRepo,
@@ -110,7 +105,6 @@ class CurrencyViewModel @Inject constructor(
         when (val validationResult = fromCurrency.value.safeToDouble()) {
             is StringToDoubleConversionResult.Valid -> {
                 with(uiState.value) {
-                    println("test1234: ${fromCurrency.code}")
                     val convertResult = convert(
                         fromVsBaseValue = exchangeRates.rates.getValue(fromCurrency.code),
                         toVsBaseValue = exchangeRates.rates.getValue(toCurrency.code),

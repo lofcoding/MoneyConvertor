@@ -25,14 +25,10 @@ class MoneyConvertorApp : Application(), Configuration.Provider {
     override fun onCreate() {
         super.onCreate()
 
-        val request = OneTimeWorkRequestBuilder<SyncWorker>()
-            .setConstraints(WorkerUtil.DefaultConstraints)
-            .build()
-
         WorkManager.getInstance(this).beginUniqueWork(
             SyncWorker.NAME,
-            ExistingWorkPolicy.REPLACE,
-            request
+            ExistingWorkPolicy.KEEP,
+            SyncWorker.request
         ).enqueue()
     }
 

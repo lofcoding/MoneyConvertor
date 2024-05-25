@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("moneyConvertor-android.hilt")
-    id("moneyConvertor.android.room")
+    alias(libs.plugins.moneyconvertor.android.hilt)
+    alias(libs.plugins.moneyconvertor.android.room)
 }
 
 android {
@@ -72,6 +72,7 @@ dependencies {
 
     implementation(libs.androidx.work)
     implementation(libs.hilt.ext.work)
+    implementation(libs.androidx.navigation.compose)
     coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
     implementation(project(":core:network"))

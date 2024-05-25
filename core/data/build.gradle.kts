@@ -1,8 +1,8 @@
 plugins {
-    id("moneyConvertor-android-library")
-    id("moneyConvertor.android.compose")
-    id("moneyConvertor-android.hilt")
-    id("moneyConvertor.android.room")
+    alias(libs.plugins.moneyconvertor.android.library)
+    alias(libs.plugins.moneyconvertor.android.compose)
+    alias(libs.plugins.moneyconvertor.android.hilt)
+    alias(libs.plugins.moneyconvertor.android.room)
 }
 
 android {

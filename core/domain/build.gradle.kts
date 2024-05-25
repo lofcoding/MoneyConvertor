@@ -1,6 +1,6 @@
 plugins {
-    id("moneyConvertor-android-library")
-    id("moneyConvertor.android.compose")
+    alias(libs.plugins.moneyconvertor.android.library)
+    alias(libs.plugins.moneyconvertor.android.compose)
 }
 
 android {

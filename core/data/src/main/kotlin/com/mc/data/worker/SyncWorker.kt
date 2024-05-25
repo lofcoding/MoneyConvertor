@@ -4,6 +4,7 @@ import Synchronizer
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.mc.data.repository.CurrencyRepo
@@ -27,5 +28,9 @@ class SyncWorker @AssistedInject constructor(
 
     companion object {
         const val NAME = "SyncWorker"
+
+        val request = OneTimeWorkRequestBuilder<SyncWorker>()
+            .setConstraints(WorkerUtil.DefaultConstraints)
+            .build()
     }
 }
