@@ -28,7 +28,7 @@ object NetworkModule {
         }
         return OkHttpClient
             .Builder()
-            .addNetworkInterceptor(HeadersInterceptor(mapOf("apiKey" to "cur_live_zn0Cj108cZ5CZ5oC2MWuXZoCWW13sVZI7yby0KYt")))
+            .addNetworkInterceptor(HeadersInterceptor(mapOf("apiKey" to "cur_live_bN1PcVzWSogK7Bs5RzLWMtdktTIW8gQqbkLp0ieH")))
             .addNetworkInterceptor(loggingInterceptor)
             .build()
     }

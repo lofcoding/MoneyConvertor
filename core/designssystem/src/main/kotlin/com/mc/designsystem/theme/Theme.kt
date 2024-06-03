@@ -18,12 +18,12 @@ import androidx.core.view.WindowCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple,
-    background = Color.White
+    background = WhiteBackground
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Purple,
-    background = Color.White
+    background = WhiteBackground
 )
 
 @Composable
@@ -37,7 +37,7 @@ fun MoneyConvertorTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = Color.White.toArgb()
+            window.statusBarColor = Color.Transparent.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = true
         }
     }

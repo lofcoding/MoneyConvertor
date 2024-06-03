@@ -2,6 +2,11 @@ package com.loc.currencyconvertor
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -13,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -33,18 +39,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.mc.designsystem.R
+import com.mc.designsystem.components.MCBackgroundScreen
 import com.mc.designsystem.components.MCCard
 import com.mc.designsystem.components.MCTextField
 import com.mc.designsystem.components.MCTextMenu
 import com.mc.designsystem.theme.MoneyConvertorTheme
-import com.mc.model.currency_convertor.CurrencyUiModel
 import kotlinx.coroutines.launch
 
 @Composable
@@ -68,54 +76,70 @@ internal fun CurrencyConvertorScreen(
     onToCurrencyChange: (CurrencyUiModel) -> Unit,
     swapCurrencies: () -> Unit
 ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Spacer(modifier = Modifier.height(30.dp))
-        Text(
-            text = stringResource(id = R.string.currency_convertor),
-            style = MaterialTheme.typography.headlineLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(100.dp))
-
-        CurrencyConvertorCard(
-            allCurrencies = uiState.allCurrencies,
-            fromCurrency = uiState.fromCurrency,
-            toCurrencyInfo = uiState.toCurrency,
-            onFromCurrencyChange = onFromCurrencyChange,
-            onToCurrencyChange = onToCurrencyChange,
-            swapCurrencies = swapCurrencies
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = "${stringResource(id = R.string.indicative_exhage_rate)} ${uiState.lastUpdated}",
-            style = MaterialTheme.typography.labelSmall
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = uiState.indicativeExchangeRate,
-            style = MaterialTheme.typography.titleMedium.copy(
-                color = Color.Black
+    MCBackgroundScreen {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .statusBarsPadding()
+        ) {
+            Spacer(modifier = Modifier.height(30.dp))
+            Text(
+                text = stringResource(id = R.string.currency_convertor),
+                style = MaterialTheme.typography.headlineLarge,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.fillMaxWidth()
             )
-        )
 
-        if(uiState.isLoading) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(30.dp)
-                        .testTag("loading")
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                text = stringResource(id = R.string.currency_convertor_description),
+                modifier = Modifier.padding(horizontal = 16.dp),
+                textAlign = TextAlign.Center,
+                color = Color(0xff808080),
+                fontSize = 16.sp
+            )
+
+            Spacer(modifier = Modifier.height(50.dp))
+
+            CurrencyConvertorCard(
+                allCurrencies = uiState.allCurrencies,
+                fromCurrency = uiState.fromCurrency,
+                toCurrencyInfo = uiState.toCurrency,
+                onFromCurrencyChange = onFromCurrencyChange,
+                onToCurrencyChange = onToCurrencyChange,
+                swapCurrencies = swapCurrencies
+            )
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Text(
+                modifier = Modifier.padding(horizontal = 22.dp),
+                text = "${stringResource(id = R.string.indicative_exhage_rate)} ${uiState.lastUpdated}",
+                style = MaterialTheme.typography.labelSmall
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Text(
+                modifier = Modifier.padding(horizontal = 22.dp),
+                text = uiState.indicativeExchangeRate,
+                style = MaterialTheme.typography.titleMedium.copy(
+                    color = Color.Black
                 )
+            )
+
+            if (uiState.isLoading) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(30.dp)
+                            .testTag("loading")
+                    )
+                }
             }
         }
     }
@@ -187,7 +211,15 @@ private fun CurrencyInfoRow(
 
             AnimatedContent(
                 targetState = selectedCurrency.code,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                transitionSpec = {
+                    (fadeIn(animationSpec = tween(300, delayMillis = 90)) +
+                            scaleIn(
+                                initialScale = 0.92f,
+                                animationSpec = tween(300, delayMillis = 90)
+                            ))
+                        .togetherWith(fadeOut(animationSpec = tween(90)))
+                }
             ) {
                 MCTextMenu(
                     selectedOption = it,
@@ -239,9 +271,13 @@ private fun CurrenciesSwapper(
 
                     scope.launch {
                         onSwap()
-                        animatable.animateTo(animatable.value + 180f)
+                        animatable.animateTo(
+                            animatable.value + 180f,
+                            animationSpec = tween(300)
+                        )
                     }
-                }.testTag("swap"),
+                }
+                .testTag("swap"),
             contentAlignment = Alignment.Center
         ) {
             Icon(

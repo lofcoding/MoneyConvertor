@@ -5,9 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mc.data.repository.CurrencyRepo
 import com.mc.data.worker.SyncManager
-import com.mc.data.worker.WorkManagerSyncManager
 import com.mc.model.currency_convertor.CurrencyInfo
-import com.mc.model.currency_convertor.CurrencyUiModel
 import com.mc.model.currency_convertor.ExchangeRates
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

@@ -1,4 +1,4 @@
-package com.mc.model.currency_convertor
+package com.loc.currencyconvertor
 
 data class CurrencyUiModel(
     val code: String,

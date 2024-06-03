@@ -3,5 +3,6 @@
     <string name="amount">Amount</string>
     <string name="converted_amount">Converted Amount</string>
     <string name="currency_convertor">Currency Convertor</string>
+    <string name="currency_convertor_description">Check live rates, set rate alerts, receive notifications and more</string>
     <string name="indicative_exhage_rate">Indicative Exhange Rate</string>
 </resources>

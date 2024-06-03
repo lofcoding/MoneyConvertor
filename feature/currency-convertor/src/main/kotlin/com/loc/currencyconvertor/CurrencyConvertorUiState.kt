@@ -1,7 +1,5 @@
 package com.loc.currencyconvertor
 
-import com.mc.model.currency_convertor.CurrencyUiModel
-
 data class CurrencyConvertorUiState(
     val isLoading: Boolean = true,
     val allCurrencies: List<CurrencyUiModel> = emptyList(),
